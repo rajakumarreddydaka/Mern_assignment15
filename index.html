@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlickFinder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0a0a0a;
+      color: white;
+      padding: 15px 30px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #00d084;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      color: #00d084;
+    }
+
+    .favorite-btn {
+      background-color: #00d084;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .hero {
+      height: calc(100vh - 60px);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: background-image 1s ease-in-out;
+      animation: fadeEffect 1s ease-in-out;
+    }
+
+    @keyframes fadeEffect {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    .content {
+      color: white;
+      text-align: center;
+      max-width: 700px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .content p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      font-size: 2rem;
+      background-color: rgba(255,255,255,0.3);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      color: white;
+    }
+
+    .arrow.left {
+      left: 20px;
+    }
+
+    .arrow.right {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><span>Flick</span>Finder</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Tv Show</a>
+      <a href="#">Movie</a>
+      <a href="#">Upcoming</a>
+    </nav>
+    <button class="favorite-btn">Favorite ♡</button>
+  </header>
+
+  <section class="hero" id="hero">
+    <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+
+    <div class="content">
+      <h1>Bringing the Big Screen to Your Screen</h1>
+      <p>Discover, critique, and celebrate movies<br>with honest reviews and fresh takes on every film</p>
+      <a href="#" class="btn">Discover More..</a>
+    </div>
+
+    <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+  </section>
+
+  <script>
+    const hero = document.getElementById('hero');
+
+    const images = [
+      'https://tapety.tja.pl/obrazki/tja_normalne/245404.jpg',
+      'https://wallpapercave.com/wp/wp5210404.jpg',
+      'https://wallpapers.com/images/hd/lord-shiva-4k-power-7yf6y3hros1w24lb.jpg',
+      'https://wallpaperaccess.com/full/3267611.jpg',
+      'https://wallpapercave.com/wp/wp10108147.jpg'
+    
+    ];
+
+    let currentIndex = 0;
+
+    function updateBackground() {
+      hero.style.animation = 'none'; // reset animation
+      void hero.offsetWidth; // trigger reflow
+      hero.style.animation = 'fadeEffect 1s ease-in-out'; // reapply fade
+      hero.style.backgroundImage = `url(${images[currentIndex]})`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateBackground();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateBackground();
+    }
+
+    // Auto change every 3 seconds
+    setInterval(nextSlide, 6000);
+
+    // Initial background
+    updateBackground();
+  </script>
+</body>
+</html>
